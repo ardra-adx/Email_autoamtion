@@ -1,8 +1,3 @@
-'''
-    Python code to send email to a list of emails from a spreadsheet
-'''
-# import the required libraries
-# from cgi import test
 import pandas as pd
 from email import message
 import smtplib 
@@ -10,28 +5,19 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
 
-# your email details
 
-SERVER = 'smtp.gmail.com'  # your smtp server
-PORT  = 587    # your port number
-FROM  =  'adxp1018@gmail.com'    # your from email id
-PASS  = 'arfedyhrctttxcpl ' # your email id password
-
-# Authentication part
+SERVER = 'smtp.gmail.com'  
+PORT  = 587   
+FROM  =  'adxp1018@gmail.com'   
+PASS  = 'arfedyhrctttxcpl '
 server = smtplib.SMTP(SERVER,PORT)
 
-server.set_debuglevel(1) # set 1 to help in debugging
+server.set_debuglevel(1) 
 server.ehlo()
-server.starttls() # start TLS connection which is secure connection
+server.starttls() 
 
 server.login(FROM,PASS)
-
-
-  
-# reading the spreadsheet
 email_list = pd.read_excel('data/data.xlsx')
-
-
 print('Getting the names and the emails................')
 # getting the names and the emails
 names = email_list['Full name']
@@ -48,7 +34,6 @@ msg['From'] = FROM
 
 print('email body settings...............')
 
-# iterate through the records
 for i in range(len(emails)):
   
     # for every record get the name and the email addresses
@@ -63,8 +48,6 @@ for i in range(len(emails)):
     server.sendmail(FROM, [email], msg.as_string())
 
 print('Email Sent .....') 
-
-# close the smtp server
 server.close()
 
 
